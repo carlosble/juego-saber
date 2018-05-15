@@ -1,2 +1,8 @@
-# juego-saber
-little game for training courses
+Install:
+
+   yarn install
+
+To run test:
+
+   ./node_modules/.bin/jest
+
