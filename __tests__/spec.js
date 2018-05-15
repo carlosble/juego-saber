@@ -5,7 +5,6 @@ const chai = require('chai');
 chai.expect();
 
 function loadTemplate(filepath, onLoad) {
-    jsdom.JSDOM.fromFile
     const filePath = path.join(__dirname, filepath);
     fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
         if (!err) {
