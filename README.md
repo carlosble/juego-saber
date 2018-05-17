@@ -4,7 +4,7 @@
     npm install
 
 ##To run the app:
-    node src/app.js
+    node src/server.js
 
 ##To run test:
 
