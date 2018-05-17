@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const chai = require('chai');
+const application = require('../src/main');
 chai.expect();
 
 function loadTemplate(filepath, onLoad) {
@@ -15,10 +16,12 @@ function loadTemplate(filepath, onLoad) {
 }
 
 describe("the game", function(){
-
+   var app;
    beforeEach(function(done){
        loadTemplate('../views/body.html', function(text){
            document.body.innerHTML = text;
+           app = application();
+           app.start();
            done();
        });
    });
@@ -28,26 +31,15 @@ describe("the game", function(){
            document.getElementById('start--button'))
            .not.toBeNull();
    });
-   xit('should press start button', function (done) {
-        // This test is not going to work because jsdom does not implement
-        // the MutationObserver object. It would work with a real browser.
 
-        let buttonStart = document.getElementById('buttonStart');
-        console.log(buttonStart.classList.toggle('invisible'));
-        buttonStart.click();
-        let questionsBox = document.getElementById('questions');
-        var config = { attributes: true, childList: true };
-        var callback = function(mutationsList) {
-            let answer = document.getElementById('3');
-            answer.click();
-            let dale = document.getElementById('btn');
-            dale.click();
-            let score = document.getElementById('scoreUI');
-            expect(score.innerText).toBe('2');
-            done();
-        };
-        var observer = new MutationObserver(callback);
-        observer.observe(questionsBox, config);
-        observer.disconnect();
+   it('answers a question', function () {
+       let buttonStart = document.getElementById('start--button');
+       buttonStart.click();
+       let firstAnswer = document.getElementsByTagName('input')[0];
+       firstAnswer.click();
+       let nextQuestionButton = document.getElementById('next--question--button');
+       nextQuestionButton.click();
+       // TODO: expect
+       expect(1).toEqual(1);
    });
 });

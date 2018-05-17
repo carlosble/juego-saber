@@ -8,7 +8,11 @@ app.set('views', 'views');
 
 // ROUTES:
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {'variable': 'valor'});
+});
+
+app.get('/otra_ruta/', (request, response) => {
+   response.send('hola');
 });
 
 // START APP

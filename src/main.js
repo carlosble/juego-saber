@@ -153,3 +153,8 @@ function application() {
         start: start
     }
 }
+
+// be able to import the file in node
+if (typeof(module) != 'undefined'){
+    module.exports = application;
+}
