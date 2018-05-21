@@ -1,4 +1,5 @@
 const fs = require('fs');
+const pug = require('pug');
 const path = require('path');
 const chai = require('chai');
 const application = require('../src/main');
@@ -15,9 +16,9 @@ function loadTemplate(filepath, onLoad) {
     });
 }
 
-describe("the game", function(){
-   var app;
-   var questions = [
+describe("the game", function () {
+    var app;
+    var questions = [
         {
             id: 10,
             title: 'Foo',
@@ -38,22 +39,28 @@ describe("the game", function(){
             ],
             correctAnswer: {id: 2}
         }
-   ];
-   beforeEach(function(done){
-       loadTemplate('../views/body.html', function(text){
-           document.body.innerHTML = text;
-           app = application();
-           app.setServerData(questions);
-           app.start();
-           done();
-       });
-   });
+    ];
+    beforeEach(function () {
+        document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
+        app = application();
+        app.setServerData(questions);
+        app.start();
+    });
 
-   it('loads the markup', function(){
-       expect(
-           document.getElementById('start--button'))
-           .not.toBeNull();
-   });
+    it('loads the markup', function () {
+        expect(
+            document.getElementById('start--button'))
+            .not.toBeNull();
+    });
+
+    it('answers a question', function () {
+        startGame();
+        selectFirstAnswer();
+
+        goToNextQuestion();
+
+        assertThatSecondQuestionIsRendered();
+    });
 
     function getQuestionTitleElement() {
         let questionTitle = document.querySelector('.question--title');
@@ -86,13 +93,4 @@ describe("the game", function(){
         expect(Number(questionTitle.id)).toEqual(Number(questions[1].id));
         expect(questionTitle.innerHTML).toEqual(questions[1].title);
     }
-
-    it('answers a question', function () {
-        startGame();
-        selectFirstAnswer();
-
-        goToNextQuestion();
-
-        assertThatSecondQuestionIsRendered();
-   });
 });
