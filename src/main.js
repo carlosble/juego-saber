@@ -8,7 +8,6 @@ function application() {
     var questionTitle;
     var questionAnswers;
     var radioAnswersList;
-    var questionsIndex = -1;
     var timerId;
     var countdown;
 
@@ -50,6 +49,8 @@ function application() {
         stopTimer();
         resetQuestions();
     }
+    //----------------------
+    var questionsIndex = -1;
     function isNotTheEndOfTheGame(){
         return questionsIndex < questions.length;
     }
@@ -62,6 +63,35 @@ function application() {
     function currentQuestion() {
         return questions[questionsIndex];
     }
+
+    let questionsNavigator = function(questions) {
+        let questionsIndex = -1;
+        function isNotTheEndOfTheGame(){
+            return questionsIndex < questions.length;
+        }
+        function resetQuestions(){
+            questionsIndex = 0;
+        }
+        function goToNextQuestion(){
+            questionsIndex++;
+        }
+        function currentQuestion() {
+            if (questionsIndex < 0){
+                return questions[0];
+            }
+            if (questionsIndex >= questions.length){
+                resetQuestions();
+            }
+            return questions[questionsIndex];
+        }
+        return {
+            isNotTheEndOfTheGame,
+            resetQuestions,
+            goToNextQuestion,
+            currentQuestion
+        };
+    };
+    //----------------------
     function startTimer() {
         timerId = setInterval(function(){
             updateCountdown(onNextQuestion, timeChanged);
@@ -152,10 +182,11 @@ function application() {
     }
 
     return {
-        start: start,
+        start,
         setServerData: function(data){
             serverData = data;
-        }
+        },
+        questionsNavigator
     }
 }
 
