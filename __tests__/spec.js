@@ -63,6 +63,11 @@ describe("the game", function () {
     });
 
     it("restart the counter time", function (done) {
+        //    startGame();
+        // selectFirstAnswer();
+        // goToNextQuestion();
+        // const counterInDOM = document.querySelector(".clock");
+        // expect(parseInt(counterInDOM.innerHTML)).toEqual(9);
         startGame();
         console.log(1);
         selectFirstAnswer();

@@ -66,6 +66,7 @@ function application() {
         timerId = setInterval(function(){
             updateCountdown(onNextQuestion, timeChanged);
         }, 1000);
+        updateCountdown(onNextQuestion, timeChanged);
     }
     function stopTimer(){
         clearInterval(timerId);
