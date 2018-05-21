@@ -1,34 +1,46 @@
-    <main>
-        <div class="questions__container hidden">
-            <h3 class="question--title"></h3>
-            <ul class="answer--list">
-                <span class="clock"></span>
+<header>
+    <h1 class="page--title">Saber y ganar</h1>
+    <h2 class="page--subtitle">Todo es empezar</h2>
+    <ul>
+        <li>Tienes 20 segundos para responder cada pregunta.</li>
+        <li>La puntuación depende del tiempo que tardes en contestar</li>
+        <li>Las respuestas incorrectas y las preguntas que no se respondan restan puntos</li>
+        <p>je je je je je je je je</p>
+    </ul>
 
-                <li class="answer--option">
-                    <input type="radio" value="" name="radAnswer" class="input-radio">
-                    <label class="question--answer"></label>
-                </li>
+    <button type="button" id="start--button" class="start--button">Empieza a jugar</button>
+</header>
 
-                <li class="answer--option">
-                    <input type="radio" value="" name="radAnswer" class="input-radio">
-                    <label class="question--answer"></label>
-                </li>
+<main>
+    <div class="questions__container hidden">
+        <h3 class="question--title"></h3>
+        <ul class="answer--list">
+            <span class="clock"></span>
 
-                <li class="answer--option">
-                    <input type="radio" value="" name="radAnswer" class="input-radio">
-                    <label class="question--answer"></label>
-                </li>
+            <li class="answer--option">
+                <input type="radio" value="" name="radAnswer" class="input-radio">
+                <label class="question--answer"></label>
+            </li>
 
-            </ul>
-            <p>Selecciona la respuesta que creas correcta</p>
+            <li class="answer--option">
+                <input type="radio" value="" name="radAnswer" class="input-radio">
+                <label class="question--answer"></label>
+            </li>
 
-            <h3 class="result--title"></h3>
-            <h3 class="result--score"></h3>
-            <button id="next--question--button">Pasa a la siguiente pregunta</button>
+            <li class="answer--option">
+                <input type="radio" value="" name="radAnswer" class="input-radio">
+                <label class="question--answer"></label>
+            </li>
 
-        </div>
+        </ul>
+        <p>Selecciona la respuesta que creas correcta</p>
 
-        <div class="scores__container"></div>
-        <div class="statistics__container"></div>
-    </main>
+        <h3 class="result--title"></h3>
+        <h3 class="result--score"></h3>
+        <button id="next--question--button">Pasa a la siguiente pregunta</button>
 
+    </div>
+
+    <div class="scores__container"></div>
+    <div class="statistics__container"></div>
+</main>

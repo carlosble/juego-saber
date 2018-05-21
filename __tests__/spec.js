@@ -3,6 +3,9 @@ const path = require('path');
 const chai = require('chai');
 const application = require('../src/main');
 chai.expect();
+// var pug = require('pug');
+// var fn = pug.compileFile('../views/index.pug', {});
+// var text = fn({});
 
 function loadTemplate(filepath, onLoad) {
     const filePath = path.join(__dirname, filepath);
@@ -39,7 +42,9 @@ describe("the game", function(){
             correctAnswer: {id: 2}
         }
    ];
+  
    beforeEach(function(done){
+
        loadTemplate('../views/body.html', function(text){
            document.body.innerHTML = text;
            app = application();
