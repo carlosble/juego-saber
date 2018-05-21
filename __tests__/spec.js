@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const jsdom = require('jsdom');
 const chai = require('chai');
+const application = require('../src/main');
 chai.expect();
 
 function loadTemplate(filepath, onLoad) {
@@ -16,10 +16,12 @@ function loadTemplate(filepath, onLoad) {
 }
 
 describe("the game", function(){
-
+   var app;
    beforeEach(function(done){
-       loadTemplate('../templates/body.html', function(text){
+       loadTemplate('../views/body.html', function(text){
            document.body.innerHTML = text;
+           app = application();
+           app.start();
            done();
        });
    });
@@ -28,5 +30,16 @@ describe("the game", function(){
        expect(
            document.getElementById('start--button'))
            .not.toBeNull();
+   });
+
+   it('answers a question', function () {
+       let buttonStart = document.getElementById('start--button');
+       buttonStart.click();
+       let firstAnswer = document.getElementsByTagName('input')[0];
+       firstAnswer.click();
+       let nextQuestionButton = document.getElementById('next--question--button');
+       nextQuestionButton.click();
+       // TODO: expect
+       expect(1).toEqual(1);
    });
 });
