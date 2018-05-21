@@ -5,20 +5,6 @@ const chai = require('chai');
 const application = require('../src/main');
 chai.expect();
 
-<<<<<<< HEAD
-function loadTemplate(filepath, onLoad) {
-    const filePath = path.join(__dirname, filepath);
-    fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
-        if (!err) {
-            onLoad(data);
-        } else {
-            console.log(err);
-        }
-    });
-}
-
-=======
->>>>>>> 2080037cecac483b5b7b28e32a258f24db38fe22
 describe("the game", function () {
     var app;
     var questions = [
