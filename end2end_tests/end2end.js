@@ -1,5 +1,6 @@
-/*
-var chromedriver = require('./chromedriver');
+
+var chromedriver = require('chromedriver');
+
 module.exports = {
     before: function(done){
       chromedriver.start();
@@ -10,10 +11,10 @@ module.exports = {
       done();
     },
     'Demo test' : function (browser) {
+        console.log('Browser:', browser);
         browser
             .url(browser.launchUrl)
             // ...
             .end();
     }
 };
-*/

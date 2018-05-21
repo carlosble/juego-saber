@@ -1,4 +1,5 @@
 const fs = require('fs');
+const pug = require('pug');
 const path = require('path');
 const chai = require('chai');
 const application = require('../src/main');
@@ -39,20 +40,45 @@ describe("the game", function () {
             correctAnswer: { id: 2 }
         }
     ];
-    beforeEach(function (done) {
-        loadTemplate('../views/body.html', function (text) {
-            document.body.innerHTML = text;
-            app = application();
-            app.setServerData(questions);
-            app.start();
-            done();
-        });
+    beforeEach(function () {
+        document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
+        app = application();
+        app.setServerData(questions);
+        app.start();
     });
 
     it('loads the markup', function () {
         expect(
             document.getElementById('start--button'))
             .not.toBeNull();
+    });
+
+    it('answers a question', function () {
+        startGame();
+        selectFirstAnswer();
+
+        goToNextQuestion();
+
+        assertThatSecondQuestionIsRendered();
+    });
+
+    it("restart the counter time", function (done) {
+        startGame();
+        console.log(1);
+        selectFirstAnswer();
+        console.log(2);
+        goToNextQuestion();
+        console.log(3);
+        const counterInDOM = document.querySelector(".clock");
+        console.log(4);
+        setTimeout(function () {
+            console.log(5);
+            expect(parseInt(counterInDOM.innerHTML)).toEqual(9);
+            console.log(6);
+            done();
+            console.log(7);
+        }, 1000);
+        console.log(8);
     });
 
     function getQuestionTitleElement() {
@@ -86,31 +112,4 @@ describe("the game", function () {
         expect(Number(questionTitle.id)).toEqual(Number(questions[1].id));
         expect(questionTitle.innerHTML).toEqual(questions[1].title);
     }
-
-
-    it('answers a question', function () {
-        startGame();
-        selectFirstAnswer();
-
-        goToNextQuestion();
-
-        assertThatSecondQuestionIsRendered();
-    });
-
-
-    //test anita
-    it('reset timer', function (done) {
-        startGame();
-        selectFirstAnswer();
-        goToNextQuestion();
-
-        let timer = document.querySelector('.clock');
-        setTimeout(function () {
-            expect(parseInt(timer.innerHTML)).toEqual(9)
-            done();
-
-        }, 1000);
-
-    });
-
 });
