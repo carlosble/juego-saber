@@ -62,6 +62,25 @@ describe("the game", function () {
         assertThatSecondQuestionIsRendered();
     });
 
+    it("restart the counter time", function (done) {
+        startGame();
+        console.log(1);
+        selectFirstAnswer();
+        console.log(2);
+        goToNextQuestion();
+        console.log(3);
+        const counterInDOM = document.querySelector(".clock");
+        console.log(4);
+        setTimeout(function () {
+            console.log(5);
+            expect(parseInt(counterInDOM.innerHTML)).toEqual(9);
+            console.log(6);
+            done();
+            console.log(7);
+        }, 1000);
+        console.log(8);
+    });
+
     function getQuestionTitleElement() {
         let questionTitle = document.querySelector('.question--title');
         return questionTitle;
