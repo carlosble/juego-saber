@@ -5,7 +5,97 @@ const chai = require('chai');
 const application = require('../src/main');
 chai.expect();
 
-describe("the game", function () {
+describe("the questions navigator", () => {
+   it("gest the current question", () => {
+        var questions = [
+           {
+               id: 10,
+               title: 'Foo',
+               answers: [
+                   {id: 0, answer: '25'},
+                   {id: 1, answer: '33'},
+                   {id: 2, answer: '37'}
+               ],
+               correctAnswer: {id: 2}
+           },
+           {
+               id: 11,
+               title: 'Pero que dices muchacho?',
+               answers: [
+                   {id: 0, answer: 'Lusaka'},
+                   {id: 1, answer: 'Harare'},
+                   {id: 2, answer: 'Canarias'}
+               ],
+               correctAnswer: {id: 2}
+           }
+       ];
+        const questionsNavigator = application().questionsNavigator(questions);
+        questionsNavigator.goToNextQuestion();
+        let question = questionsNavigator.currentQuestion();
+        expect(questions).toContain(question);
+   });
+   it("is always pointing to a question", () => {
+        var questions = [
+            {
+                id: 10,
+                title: 'Foo',
+                answers: [
+                    {id: 0, answer: '25'},
+                    {id: 1, answer: '33'},
+                    {id: 2, answer: '37'}
+                ],
+                correctAnswer: {id: 2}
+            },
+            {
+                id: 11,
+                title: 'Pero que dices muchacho?',
+                answers: [
+                    {id: 0, answer: 'Lusaka'},
+                    {id: 1, answer: 'Harare'},
+                    {id: 2, answer: 'Canarias'}
+                ],
+                correctAnswer: {id: 2}
+            }
+        ];
+        const questionsNavigator = application().questionsNavigator(questions);
+        let question = questionsNavigator.currentQuestion();
+        expect(questions).toContain(question);
+   });
+   it("is always pointing to a question", () => {
+        var questions = [
+            {
+                id: 10,
+                title: 'Foo',
+                answers: [
+                    {id: 0, answer: '25'},
+                    {id: 1, answer: '33'},
+                    {id: 2, answer: '37'}
+                ],
+                correctAnswer: {id: 2}
+            },
+            {
+                id: 11,
+                title: 'Pero que dices muchacho?',
+                answers: [
+                    {id: 0, answer: 'Lusaka'},
+                    {id: 1, answer: 'Harare'},
+                    {id: 2, answer: 'Canarias'}
+                ],
+                correctAnswer: {id: 2}
+            }
+        ];
+        const questionsNavigator = application().questionsNavigator(questions);
+        questionsNavigator.goToNextQuestion();
+        questionsNavigator.goToNextQuestion();
+        questionsNavigator.goToNextQuestion();
+        questionsNavigator.goToNextQuestion();
+
+        let question = questionsNavigator.currentQuestion();
+        expect(questions).toContain(question);
+   });
+});
+
+xdescribe("the game", function () {
     var app;
     var questions = [
         {
@@ -60,13 +150,14 @@ describe("the game", function () {
         console.log(3);
         const counterInDOM = document.querySelector(".clock");
         console.log(4);
-        setTimeout(function () {
+        function onTimeout() {
             console.log(5);
             expect(parseInt(counterInDOM.innerHTML)).toEqual(9);
             console.log(6);
             done();
             console.log(7);
-        }, 1000);
+        }
+        setTimeout(onTimeout, 1000);
         console.log(8);
     });
 
