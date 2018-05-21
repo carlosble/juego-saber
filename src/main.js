@@ -1,13 +1,14 @@
 function application() {
 
     var questions = [];
+    var serverData = null;
     var startButton;
     var questionsContainer;
     var nextQuestionButton;
     var questionTitle;
     var questionAnswers;
     var radioAnswersList;
-    var questionsIndex = 0;
+    var questionsIndex = -1;
     var timerId;
     var countdown;
 
@@ -88,7 +89,7 @@ function application() {
 
     function getQuestions(callback) {
 
-        var serverData = [
+        serverData = serverData || [
             {
                 id: 1,
                 title: '¿Cuántos años tiene María?',
@@ -150,7 +151,10 @@ function application() {
     }
 
     return {
-        start: start
+        start: start,
+        setServerData: function(data){
+            serverData = data;
+        }
     }
 }
 
