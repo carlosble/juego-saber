@@ -1,4 +1,6 @@
-function application() {
+var saberganar = saberganar || {};
+
+saberganar.game  = function(questionsNavigator) {
 
     var questions = [];
     var serverData = null;
@@ -50,33 +52,6 @@ function application() {
         stopTimer();
     }
 
-    function questionsNavigator(questions) {
-        let questionsIndex = 0;
-        let nonVisitedQuestions = true;
-        function areThereNonVisitedQuestions(){
-            return nonVisitedQuestions;
-        }
-        function resetQuestions(){
-            questionsIndex = 0;
-        }
-        function goToNextQuestion(){
-            questionsIndex++;
-        }
-        function getNextQuestion() {
-            let question = questions[questionsIndex];
-            goToNextQuestion();
-            if (questionsIndex >= questions.length){
-                nonVisitedQuestions = false;
-                resetQuestions();
-            }
-            return question;
-        }
-        return {
-            areThereNonVisitedQuestions,
-            getNextQuestion: getNextQuestion
-        };
-    }
-    //----------------------
     function startTimer() {
         timerId = setInterval(function(){
             updateCountdown(onNextQuestion, timeChanged);
@@ -172,9 +147,9 @@ function application() {
         },
         questionsNavigator
     }
-}
+};
 
 // be able to import the file in node
 if (typeof(module) != 'undefined'){
-    module.exports = application;
+    module.exports = saberganar;
 }

@@ -2,7 +2,8 @@ const fs = require('fs');
 const pug = require('pug');
 const path = require('path');
 const chai = require('chai');
-const application = require('../src/main');
+const saberganarGame = require('../src/main');
+const saberganarQuestionsNavigator = require('../src/questionsNavigator');
 chai.expect();
 
 describe("the questions navigator", () => {
@@ -31,7 +32,7 @@ describe("the questions navigator", () => {
     let questionsNavigator;
 
     beforeEach(function () {
-        questionsNavigator = application().questionsNavigator(questions);
+        questionsNavigator = saberganarQuestionsNavigator.questionsNavigator(questions);
     });
 
     it("gest the current question", () => {
@@ -87,7 +88,7 @@ describe("the game", function () {
     ];
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
-        app = application();
+        app = saberganarGame.game(saberganarQuestionsNavigator.questionsNavigator);
         app.setServerData(questions);
         app.start();
     });
