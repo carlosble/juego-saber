@@ -1,10 +1,6 @@
-const fs = require('fs');
 const pug = require('pug');
-const path = require('path');
-const chai = require('chai');
 const saberganarGame = require('../src/main');
 const saberganarQuestionsNavigator = require('../src/questionsNavigator');
-chai.expect();
 
 describe("the questions navigator", () => {
     let questions = [
