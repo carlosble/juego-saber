@@ -37,10 +37,9 @@ function application() {
         loadNextQuestion();
     }
     function loadNextQuestion() {
-        theQuestionNavigator.goToNextQuestion();
         resetCountdown();
         if (theQuestionNavigator.areThereNonVisitedQuestions()) {
-            renderQuestion(theQuestionNavigator.getQuestion());
+            renderQuestion(theQuestionNavigator.getNextQuestion());
         }
         else {
             gameOver();
@@ -49,13 +48,13 @@ function application() {
     function gameOver(){
         hideContainerPanel();
         stopTimer();
-        theQuestionNavigator.resetQuestions();
     }
 
     function questionsNavigator(questions) {
-        let questionsIndex = -1;
+        let questionsIndex = 0;
+        let nonVisitedQuestions = true;
         function areThereNonVisitedQuestions(){
-            return questionsIndex < questions.length;
+            return nonVisitedQuestions;
         }
         function resetQuestions(){
             questionsIndex = 0;
@@ -63,20 +62,18 @@ function application() {
         function goToNextQuestion(){
             questionsIndex++;
         }
-        function getQuestion() {
-            if (questionsIndex < 0){
-                return questions[0];
-            }
+        function getNextQuestion() {
+            let question = questions[questionsIndex];
+            goToNextQuestion();
             if (questionsIndex >= questions.length){
+                nonVisitedQuestions = false;
                 resetQuestions();
             }
-            return questions[questionsIndex];
+            return question;
         }
         return {
             areThereNonVisitedQuestions,
-            resetQuestions,
-            goToNextQuestion,
-            getQuestion
+            getNextQuestion: getNextQuestion
         };
     }
     //----------------------

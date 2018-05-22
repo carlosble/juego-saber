@@ -35,26 +35,29 @@ describe("the questions navigator", () => {
     });
 
     it("gest the current question", () => {
-        questionsNavigator.goToNextQuestion();
-        let question = questionsNavigator.getQuestion();
+        let question = questionsNavigator.getNextQuestion();
         expect(questions).toContain(question);
     });
 
     it("is always pointing to a question", () => {
-        let question = questionsNavigator.getQuestion();
+        let question = questionsNavigator.getNextQuestion();
         expect(questions).toContain(question);
     });
 
     it("does not repeat the last question", () => {
-        questionsNavigator.goToNextQuestion();
-        let question1 = questionsNavigator.getQuestion();
-        questionsNavigator.goToNextQuestion();
-        let question2 = questionsNavigator.getQuestion();
-        questionsNavigator.goToNextQuestion();
-        let question3 = questionsNavigator.getQuestion();
+        let question1 = questionsNavigator.getNextQuestion();
+        let question2 = questionsNavigator.getNextQuestion();
+        let question3 = questionsNavigator.getNextQuestion();
 
         expect(question1).not.toEqual(question2);
         expect(question2).not.toEqual(question3);
+    });
+
+    it("knows when the questions are all visited", () => {
+        questionsNavigator.getNextQuestion();
+        expect(questionsNavigator.areThereNonVisitedQuestions()).toBeTruthy();
+        questionsNavigator.getNextQuestion();
+        expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
     });
 });
 
