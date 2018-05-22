@@ -1,6 +1,4 @@
-var saberganar = saberganar || {};
-
-saberganar.questionsNavigator = function (questions) {
+export default function questionsNavigator(questions) {
     let questionsIndex = 0;
     let nonVisitedQuestions = true;
 
@@ -31,9 +29,4 @@ saberganar.questionsNavigator = function (questions) {
         getNextQuestion: getNextQuestion
     };
 };
-
-// be able to import the file in node
-if (typeof(module) != 'undefined'){
-    module.exports = saberganar;
-}
 
