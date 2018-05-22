@@ -10,6 +10,7 @@ function application() {
     var radioAnswersList;
     var timerId;
     var countdown;
+    var theQuestionNavigator;
 
 
     function start(){
@@ -23,6 +24,7 @@ function application() {
         nextQuestionButton.addEventListener('click', onNextQuestion);
         getQuestions(function (data) {
             questions = data;
+            theQuestionNavigator = questionsNavigator(questions);
         });
     }
 
@@ -35,10 +37,10 @@ function application() {
         loadNextQuestion();
     }
     function loadNextQuestion() {
-        goToNextQuestion();
+        theQuestionNavigator.goToNextQuestion();
         resetCountdown();
-        if (isNotTheEndOfTheGame()) {
-            renderQuestion(currentQuestion());
+        if (theQuestionNavigator.areThereNonVisitedQuestions()) {
+            renderQuestion(theQuestionNavigator.getQuestion());
         }
         else {
             gameOver();
@@ -47,26 +49,12 @@ function application() {
     function gameOver(){
         hideContainerPanel();
         stopTimer();
-        resetQuestions();
-    }
-    //----------------------
-    var questionsIndex = -1;
-    function isNotTheEndOfTheGame(){
-        return questionsIndex < questions.length;
-    }
-    function resetQuestions(){
-        questionsIndex = 0;
-    }
-    function goToNextQuestion(){
-        questionsIndex++;
-    }
-    function currentQuestion() {
-        return questions[questionsIndex];
+        theQuestionNavigator.resetQuestions();
     }
 
-    let questionsNavigator = function(questions) {
+    function questionsNavigator(questions) {
         let questionsIndex = -1;
-        function isNotTheEndOfTheGame(){
+        function areThereNonVisitedQuestions(){
             return questionsIndex < questions.length;
         }
         function resetQuestions(){
@@ -75,22 +63,22 @@ function application() {
         function goToNextQuestion(){
             questionsIndex++;
         }
-        function currentQuestion() {
+        function getQuestion() {
             if (questionsIndex < 0){
                 return questions[0];
             }
             if (questionsIndex >= questions.length){
-                return questions[questions.length -1];
+                resetQuestions();
             }
             return questions[questionsIndex];
         }
         return {
-            isNotTheEndOfTheGame,
+            areThereNonVisitedQuestions,
             resetQuestions,
             goToNextQuestion,
-            currentQuestion
+            getQuestion
         };
-    };
+    }
     //----------------------
     function startTimer() {
         timerId = setInterval(function(){
