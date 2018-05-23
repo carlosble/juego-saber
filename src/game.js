@@ -1,16 +1,16 @@
-export default function game(questionsNavigator) {
+export default function createGame(questionsNavigator) {
 
-    var questions = [];
-    var serverData = null;
-    var startButton;
-    var questionsContainer;
-    var nextQuestionButton;
-    var questionTitle;
-    var questionAnswers;
-    var radioAnswersList;
-    var timerId;
-    var countdown;
-    var theQuestionNavigator;
+    let questions = [];
+    let serverData = null;
+    let startButton;
+    let questionsContainer;
+    let nextQuestionButton;
+    let questionTitle;
+    let questionAnswers;
+    let radioAnswersList;
+    let timerId;
+    let countdown;
+    let theQuestionNavigator;
 
 
     function start(){
@@ -62,7 +62,7 @@ export default function game(questionsNavigator) {
         countdown = 10;
     }
     function timeChanged() {
-        var clock = document.querySelector('.clock');
+        let clock = document.querySelector('.clock');
         clock.innerHTML = countdown;
     }
     function updateCountdown(onTimeout, onTimeChanged){
@@ -126,14 +126,16 @@ export default function game(questionsNavigator) {
         showContainerPanel();
         questionTitle.innerHTML = (question.title);
         questionTitle.setAttribute('id', question.id);
-        for (var x = 0; x < question.answers.length; x++) {
-            questionAnswers[x].innerHTML = (question.answers[x].answer);
-            radioAnswersList[x].setAttribute('id', question.answers[x].id);
+        for (let i = 0; i < question.answers.length; i++) {
+            questionAnswers[i].innerHTML = (question.answers[i].answer);
+            radioAnswersList[i].setAttribute('id', question.answers[i].id);
         }
     }
+
     function showContainerPanel(){
         questionsContainer.classList.remove('hidden');
     }
+
     function hideContainerPanel() {
         questionsContainer.classList.toggle('hidden');
     }

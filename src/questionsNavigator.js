@@ -1,4 +1,4 @@
-export default function questionsNavigator(questions) {
+export default function createQuestionsNavigator(questions) {
     let questionsIndex = 0;
     let nonVisitedQuestions = true;
 

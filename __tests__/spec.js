@@ -59,8 +59,8 @@ describe("the questions navigator", () => {
 });
 
 describe("the game", function () {
-    var app;
-    var questions = [
+    let game;
+    let questions = [
         {
             id: 10,
             title: 'Foo',
@@ -84,9 +84,9 @@ describe("the game", function () {
     ];
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
-        app = createGame(createQuestionsNavigator);
-        app.setServerData(questions);
-        app.start();
+        game = createGame(createQuestionsNavigator);
+        game.setServerData(questions);
+        game.start();
     });
 
     it('loads the markup', function () {
