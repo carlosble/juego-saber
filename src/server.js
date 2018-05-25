@@ -11,8 +11,10 @@ app.get('/', (req, res) => {
     res.render('index', {'variable': 'valor'});
 });
 
-app.get('/otra_ruta/', (request, response) => {
-   response.send('hola');
+app.get('/api/questions', (request, response) => {
+    let questions = [{id:1},{id:2},{id:3}];
+    response.setHeader('Content-Type', 'application/json');
+    response.send(JSON.stringify(questions));
 });
 
 // START APP
