@@ -85,7 +85,9 @@ describe("the game", function () {
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
         game = createGame(createQuestionsNavigator);
-        game.setServerData(questions);
+        game.setRequestHandler(function(callback){
+            callback(questions);
+        });
         game.start();
     });
 

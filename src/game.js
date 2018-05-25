@@ -1,7 +1,5 @@
 export default function createGame(questionsNavigator) {
 
-    let questions = [];
-    let serverData = null;
     let startButton;
     let questionsContainer;
     let nextQuestionButton;
@@ -11,6 +9,7 @@ export default function createGame(questionsNavigator) {
     let timerId;
     let countdown;
     let theQuestionNavigator;
+    let requestHandler;
 
 
     function start(){
@@ -22,10 +21,19 @@ export default function createGame(questionsNavigator) {
         radioAnswersList = document.querySelectorAll('.input-radio');
         nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.addEventListener('click', onNextQuestion);
-        getQuestions(function (data) {
-            questions = data;
+        let requestQuestions = requestHandler || getQuestions;
+        requestQuestions(function (questions) {
             theQuestionNavigator = questionsNavigator(questions);
         });
+    }
+
+    function getQuestions(callback) {
+        let request = new XMLHttpRequest();
+        request.addEventListener("load", () => {
+            let questions = JSON.parse(this.responseText);
+            callback(questions);
+        });
+        request.open("GET", '/api/questions');
     }
 
     function onStartGame(){
@@ -75,53 +83,6 @@ export default function createGame(questionsNavigator) {
         }
     }
 
-    function getQuestions(callback) {
-
-        serverData = serverData || [
-            {
-                id: 1,
-                title: '¿Cuántos años tiene María?',
-                answers: [
-                    {id: 0, answer: '25'},
-                    {id: 1, answer: '33'},
-                    {id: 2, answer: '37'}
-                ],
-                correctAnswer: {id: 1}
-            },
-            {
-                id: 2,
-                title: '¿Cuál es la capital de Zambia?',
-                answers: [
-                    {id: 0, answer: 'Lusaka'},
-                    {id: 1, answer: 'Harare'},
-                    {id: 2, answer: 'Madrid'}
-                ],
-                correctAnswer: {id: 0}
-            },
-            {
-                id: 3,
-                title: '¿Cuál es el nombre completo de Freud?',
-                answers: [
-                    {id: 0, answer: 'Adolf'},
-                    {id: 1, answer: 'Sefarad'},
-                    {id: 2, answer: 'Sigmund'}
-                ],
-                correctAnswer: {id: 2}
-            },
-            {
-                id: 4,
-                title: '¿Cuál es el animal más rápido del mundo?',
-                answers: [
-                    {id: 0, answer: 'Guepardo'},
-                    {id: 1, answer: 'León'},
-                    {id: 2, answer: 'Tortuga'}
-                ],
-                correctAnswer: {id: 0}
-            }
-        ];
-        callback(serverData);
-    }
-
     function renderQuestion(question) {
         showContainerPanel();
         questionTitle.innerHTML = (question.title);
@@ -142,8 +103,8 @@ export default function createGame(questionsNavigator) {
 
     return {
         start,
-        setServerData: function(data){
-            serverData = data;
+        setRequestHandler: function(handler){
+            requestHandler = handler;
         },
         questionsNavigator
     }
