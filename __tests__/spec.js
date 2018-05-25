@@ -84,12 +84,12 @@ describe("the game", function () {
     ];
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
-        game = createGame(createQuestionsNavigator);
-        game.setClient({
+        let stubClient = {
             getQuestions: function(callback){
                 callback(questions);
             }
-        });
+        };
+        game = createGame(createQuestionsNavigator, stubClient);
         game.start();
     });
 

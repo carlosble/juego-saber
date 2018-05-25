@@ -1,4 +1,4 @@
-export default function createGame(questionsNavigator) {
+export default function createGame(createQuestionsNavigator, client) {
 
     let startButton;
     let questionsContainer;
@@ -9,9 +9,6 @@ export default function createGame(questionsNavigator) {
     let timerId;
     let countdown;
     let theQuestionNavigator;
-    let client;
-
-
 
     function start(){
         startButton = document.querySelector('.start--button');
@@ -23,7 +20,7 @@ export default function createGame(questionsNavigator) {
         nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.addEventListener('click', onNextQuestion);
         client.getQuestions(function (questions) {
-            theQuestionNavigator = questionsNavigator(questions);
+            theQuestionNavigator = createQuestionsNavigator(questions);
         });
     }
 
@@ -94,9 +91,6 @@ export default function createGame(questionsNavigator) {
 
     return {
         start,
-        setClient: function(aClient){
-            client = aClient;
-        },
-        questionsNavigator
+        questionsNavigator: createQuestionsNavigator
     }
 };
