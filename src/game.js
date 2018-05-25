@@ -9,7 +9,8 @@ export default function createGame(questionsNavigator) {
     let timerId;
     let countdown;
     let theQuestionNavigator;
-    let requestHandler;
+    let client;
+
 
 
     function start(){
@@ -21,20 +22,9 @@ export default function createGame(questionsNavigator) {
         radioAnswersList = document.querySelectorAll('.input-radio');
         nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.addEventListener('click', onNextQuestion);
-        let requestQuestions = requestHandler || getQuestions;
-        requestQuestions(function (questions) {
+        client.getQuestions(function (questions) {
             theQuestionNavigator = questionsNavigator(questions);
         });
-    }
-
-    function getQuestions(callback) {
-        let request = new XMLHttpRequest();
-        request.addEventListener("load", () => {
-            let questions = JSON.parse(request.responseText);
-            callback(questions);
-        });
-        request.open("GET", '/api/questions');
-        request.send();
     }
 
     function onStartGame(){
@@ -104,8 +94,8 @@ export default function createGame(questionsNavigator) {
 
     return {
         start,
-        setRequestHandler: function(handler){
-            requestHandler = handler;
+        setClient: function(aClient){
+            client = aClient;
         },
         questionsNavigator
     }
