@@ -1,4 +1,4 @@
-import createGame from '../src/main';
+import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
 const pug = require('pug');
 
