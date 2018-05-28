@@ -8,7 +8,7 @@ export default function createGame(createQuestionsNavigator, client) {
     let radioAnswersList;
     let timerId;
     let countdown;
-    let theQuestionNavigator;
+    let questionNavigator;
 
     function start(){
         startButton = document.querySelector('.start--button');
@@ -20,7 +20,7 @@ export default function createGame(createQuestionsNavigator, client) {
         nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.addEventListener('click', onNextQuestion);
         client.getQuestions(function (questions) {
-            theQuestionNavigator = createQuestionsNavigator(questions);
+            questionNavigator = createQuestionsNavigator(questions);
         });
     }
 
@@ -34,8 +34,8 @@ export default function createGame(createQuestionsNavigator, client) {
     }
     function loadNextQuestion() {
         resetCountdown();
-        if (theQuestionNavigator.areThereNonVisitedQuestions()) {
-            renderQuestion(theQuestionNavigator.getNextQuestion());
+        if (questionNavigator.areThereNonVisitedQuestions()) {
+            renderQuestion(questionNavigator.getNextQuestion());
         }
         else {
             gameOver();
