@@ -1,6 +1,6 @@
+import createGame from '../src/game';
+import createQuestionsNavigator from '../src/questionsNavigator';
 const pug = require('pug');
-const saberganarGame = require('../src/main');
-const saberganarQuestionsNavigator = require('../src/questionsNavigator');
 
 describe("the questions navigator", () => {
     let questions = [
@@ -28,7 +28,7 @@ describe("the questions navigator", () => {
     let questionsNavigator;
 
     beforeEach(function () {
-        questionsNavigator = saberganarQuestionsNavigator.questionsNavigator(questions);
+        questionsNavigator = createQuestionsNavigator(questions);
     });
 
     it("gest the current question", () => {
@@ -59,8 +59,8 @@ describe("the questions navigator", () => {
 });
 
 describe("the game", function () {
-    var app;
-    var questions = [
+    let game;
+    let questions = [
         {
             id: 10,
             title: 'Foo',
@@ -84,9 +84,13 @@ describe("the game", function () {
     ];
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
-        app = saberganarGame.game(saberganarQuestionsNavigator.questionsNavigator);
-        app.setServerData(questions);
-        app.start();
+        let stubClient = {
+            getQuestions: function(callback){
+                callback(questions);
+            }
+        };
+        game = createGame(createQuestionsNavigator, stubClient);
+        game.start();
     });
 
     it('loads the markup', function () {
