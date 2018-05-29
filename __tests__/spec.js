@@ -1,4 +1,5 @@
 import createGame from '../src/game';
+import createClient from '../src/client';
 import createQuestionsNavigator from '../src/questionsNavigator';
 const pug = require('pug');
 
@@ -82,14 +83,15 @@ describe("the game", function () {
             correctAnswer: {id: 2}
         }
     ];
-    beforeEach(function () {
+    beforeEach(function (done) {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
         let stubClient = {
             getQuestions: function(callback){
                 callback(questions);
             }
         };
-        game = createGame(createQuestionsNavigator, stubClient);
+        let client = createClient(done);
+        game = createGame(createQuestionsNavigator, client);
         game.start();
     });
 

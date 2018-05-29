@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/questions', (request, response) => {
+    console.log('Recibida peticion');
     let questions = [
         {
             id: 1,

@@ -8,7 +8,11 @@ export default function createGame(createQuestionsNavigator, client) {
     let radioAnswersList;
     let timerId;
     let countdown;
-    let questionNavigator;
+    let questionNavigator = {
+        areThereNonVisitedQuestions: function(){
+            throw 'Questions have not been initialized'
+        }
+    };
 
     function start(){
         startButton = document.querySelector('.start--button');
