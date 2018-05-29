@@ -1,12 +1,8 @@
-const fs = require('fs');
 const pug = require('pug');
-const path = require('path');
-const chai = require('chai');
 // const application = require('../src/main');
 // import application from '../src/main';
 import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
-chai.expect();
 
 describe("the questions navigator", () => {
     let questions = [
@@ -47,10 +43,10 @@ describe("the questions navigator", () => {
    });
    it("is always pointing to a question", () => {
     
-        questionsNavigator.goToNextQuestion();
-        questionsNavigator.goToNextQuestion();
-        questionsNavigator.goToNextQuestion();
-        questionsNavigator.goToNextQuestion();
+       questionsNavigator.getNextQuestion();
+       questionsNavigator.getNextQuestion();
+       questionsNavigator.getNextQuestion();
+       questionsNavigator.getNextQuestion();
 
        let question = questionsNavigator.getNextQuestion();
         expect(questions).toContain(question);
@@ -59,21 +55,15 @@ describe("the questions navigator", () => {
 
         let initialQuestion = questionsNavigator.getNextQuestion();
         let initialQuestionId = initialQuestion.id;
-        console.log('antes de pulsar primera vez');
 
-        questionsNavigator.goToNextQuestion();
         let firstQuestion = questionsNavigator.getNextQuestion();
         let firstQuestionId = firstQuestion.id;        
-        expect(firstQuestionId).toEqual(initialQuestionId);
-        console.log('antes de pulsar segunda vez');
-
-        // questionsNavigator.goToNextQuestion();
+        expect(firstQuestionId).not.toEqual(initialQuestionId);
+ 
         let nextQuestion = questionsNavigator.getNextQuestion();
         let nextQuestionId = nextQuestion.id;
         expect(nextQuestionId).not.toEqual(firstQuestionId);
-        console.log('antes de pulsar tercera vez');
-        
-        // questionsNavigator.goToNextQuestion();
+
         let nextQuestionAgain = questionsNavigator.getNextQuestion();
         let nextQuestionAgainId = nextQuestionAgain.id;
         expect(nextQuestionAgainId).not.toEqual(nextQuestionId);
