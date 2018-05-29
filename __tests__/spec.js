@@ -2,146 +2,86 @@ const fs = require('fs');
 const pug = require('pug');
 const path = require('path');
 const chai = require('chai');
-const application = require('../src/main');
+// const application = require('../src/main');
+// import application from '../src/main';
+import createGame from '../src/game';
+import createQuestionsNavigator from '../src/questionsNavigator';
 chai.expect();
 
 describe("the questions navigator", () => {
+    let questions = [
+        {
+            id: 10,
+            title: 'Foo',
+            answers: [
+                { id: 0, answer: '25' },
+                { id: 1, answer: '33' },
+                { id: 2, answer: '37' }
+            ],
+            correctAnswer: { id: 2 }
+        },
+        {
+            id: 11,
+            title: 'Pero que dices muchacho?',
+            answers: [
+                { id: 0, answer: 'Lusaka' },
+                { id: 1, answer: 'Harare' },
+                { id: 2, answer: 'Canarias' }
+            ],
+            correctAnswer: { id: 2 }
+        }
+    ];
+    let questionsNavigator;
+    beforeEach(function () {
+        questionsNavigator = createQuestionsNavigator(questions);
+    });
    it("gest the current question", () => {
-        var questions = [
-           {
-               id: 10,
-               title: 'Foo',
-               answers: [
-                   {id: 0, answer: '25'},
-                   {id: 1, answer: '33'},
-                   {id: 2, answer: '37'}
-               ],
-               correctAnswer: {id: 2}
-           },
-           {
-               id: 11,
-               title: 'Pero que dices muchacho?',
-               answers: [
-                   {id: 0, answer: 'Lusaka'},
-                   {id: 1, answer: 'Harare'},
-                   {id: 2, answer: 'Canarias'}
-               ],
-               correctAnswer: {id: 2}
-           }
-       ];
-        const questionsNavigator = application().questionsNavigator(questions);
-        questionsNavigator.goToNextQuestion();
-        let question = questionsNavigator.currentQuestion();
+        
+        let question =     questionsNavigator.getNextQuestion();
         expect(questions).toContain(question);
    });
    it("is always pointing to a question", () => {
-        var questions = [
-            {
-                id: 10,
-                title: 'Foo',
-                answers: [
-                    {id: 0, answer: '25'},
-                    {id: 1, answer: '33'},
-                    {id: 2, answer: '37'}
-                ],
-                correctAnswer: {id: 2}
-            },
-            {
-                id: 11,
-                title: 'Pero que dices muchacho?',
-                answers: [
-                    {id: 0, answer: 'Lusaka'},
-                    {id: 1, answer: 'Harare'},
-                    {id: 2, answer: 'Canarias'}
-                ],
-                correctAnswer: {id: 2}
-            }
-        ];
-        const questionsNavigator = application().questionsNavigator(questions);
-        let question = questionsNavigator.currentQuestion();
+        
+       let question = questionsNavigator.getNextQuestion();
         expect(questions).toContain(question);
    });
    it("is always pointing to a question", () => {
-        var questions = [
-            {
-                id: 10,
-                title: 'Foo',
-                answers: [
-                    {id: 0, answer: '25'},
-                    {id: 1, answer: '33'},
-                    {id: 2, answer: '37'}
-                ],
-                correctAnswer: {id: 2}
-            },
-            {
-                id: 11,
-                title: 'Pero que dices muchacho?',
-                answers: [
-                    {id: 0, answer: 'Lusaka'},
-                    {id: 1, answer: 'Harare'},
-                    {id: 2, answer: 'Canarias'}
-                ],
-                correctAnswer: {id: 2}
-            }
-        ];
-        const questionsNavigator = application().questionsNavigator(questions);
+    
         questionsNavigator.goToNextQuestion();
         questionsNavigator.goToNextQuestion();
         questionsNavigator.goToNextQuestion();
         questionsNavigator.goToNextQuestion();
 
-        let question = questionsNavigator.currentQuestion();
+       let question = questionsNavigator.getNextQuestion();
         expect(questions).toContain(question);
    });
     it("get a diferent question", () => {
-        var questions = [
-            {
-                id: 10,
-                title: 'Foo',
-                answers: [
-                    { id: 0, answer: '25' },
-                    { id: 1, answer: '33' },
-                    { id: 2, answer: '37' }
-                ],
-                correctAnswer: { id: 2 }
-            },
-            {
-                id: 11,
-                title: 'Pero que dices muchacho?',
-                answers: [
-                    { id: 0, answer: 'Lusaka' },
-                    { id: 1, answer: 'Harare' },
-                    { id: 2, answer: 'Canarias' }
-                ],
-                correctAnswer: { id: 2 }
-            }
-        ];
-        const questionsNavigator = application().questionsNavigator(questions);
-        let initialQuestion = questionsNavigator.currentQuestion();
+
+        let initialQuestion = questionsNavigator.getNextQuestion();
         let initialQuestionId = initialQuestion.id;
         console.log('antes de pulsar primera vez');
 
         questionsNavigator.goToNextQuestion();
-        let firstQuestion = questionsNavigator.currentQuestion();
+        let firstQuestion = questionsNavigator.getNextQuestion();
         let firstQuestionId = firstQuestion.id;        
         expect(firstQuestionId).toEqual(initialQuestionId);
         console.log('antes de pulsar segunda vez');
 
-        questionsNavigator.goToNextQuestion();
-        let nextQuestion = questionsNavigator.currentQuestion();
+        // questionsNavigator.goToNextQuestion();
+        let nextQuestion = questionsNavigator.getNextQuestion();
         let nextQuestionId = nextQuestion.id;
         expect(nextQuestionId).not.toEqual(firstQuestionId);
         console.log('antes de pulsar tercera vez');
         
-        questionsNavigator.goToNextQuestion();
-        let nextQuestionAgain = questionsNavigator.currentQuestion();
+        // questionsNavigator.goToNextQuestion();
+        let nextQuestionAgain = questionsNavigator.getNextQuestion();
         let nextQuestionAgainId = nextQuestionAgain.id;
         expect(nextQuestionAgainId).not.toEqual(nextQuestionId);
     });
 });
 
 xdescribe("the game", function () {
-    var app;
+    var game;
     var questions = [
         {
             id: 10,
@@ -166,9 +106,16 @@ xdescribe("the game", function () {
     ];
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
-        app = application();
-        app.setServerData(questions);
-        app.start();
+        // let stubClient = {
+        //     getQuestions: function (callback) {
+        //         callback(questions);
+        //     }
+        // };
+        // game.setRequestHandler(function(callback){
+        //     callback(questions);
+        // });
+        game.createGame(createQuestionsNavigator(questions));
+        game.start();
     });
 
     it('loads the markup', function () {
