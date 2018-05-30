@@ -21,8 +21,10 @@ export default function createGame(createQuestionNavigator, createClientApi) {
         radioAnswersList = document.querySelectorAll('.input-radio');
         nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.addEventListener('click', onNextQuestion);
+        client = createClientApi();
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionNavigator(questions);
+            
         });
     }
 
@@ -91,10 +93,8 @@ export default function createGame(createQuestionNavigator, createClientApi) {
 
     return {
         start,
-        setClient: function (aClient) {
-            client = aClient;
-        },
-        questionsNavigator: createQuestionNavigator
+        questionsNavigator: createQuestionNavigator,
+        client
     }
 }
 
