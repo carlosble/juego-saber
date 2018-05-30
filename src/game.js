@@ -19,9 +19,13 @@ export default function createGame(createQuestionNavigator, client) {
         radioAnswersList = document.querySelectorAll('.input-radio');
         nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.addEventListener('click', onNextQuestion);
-        client.getQuestions(function (questions) {
-            questionNavigator = createQuestionNavigator(questions);            
-        });
+        client.getQuestions(
+            function (questions) {
+                questionNavigator = createQuestionNavigator(questions);
+            }, 
+            function (error) {
+                console.log(error);
+            });
     }
 
     function onStartGame() {
