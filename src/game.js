@@ -1,4 +1,4 @@
-export default function createGame(createQuestionNavigator) {
+export default function createGame(createQuestionNavigator, createClientApi) {
 
     // var questions = [];
     var startButton;
@@ -10,7 +10,7 @@ export default function createGame(createQuestionNavigator) {
     var timerId;
     var countdown;
     let theQuestionNavigator;
-    let requestHandler;
+    let client;
 
 
     function start() {
@@ -22,23 +22,22 @@ export default function createGame(createQuestionNavigator) {
         radioAnswersList = document.querySelectorAll('.input-radio');
         nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.addEventListener('click', onNextQuestion);
-        let handler = requestHandler || getQuestions;
-        handler(function (questions) {
+        client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionNavigator(questions);
             // questions = questions || serverQuestions;
             // questions = dataJson;
         });
     }
 
-    function getQuestions(callback) {
-        var request = new XMLHttpRequest();
-        request.addEventListener("load", function () {
-            let questions = JSON.parse(this.responseText);
-            callback(questions);
-        });
-        request.open("GET", '/api/questions');
-        request.send();
-    }
+    // function getQuestions(callback) {
+    //     var request = new XMLHttpRequest();
+    //     request.addEventListener("load", function () {
+    //         let questions = JSON.parse(this.responseText);
+    //         callback(questions);
+    //     });
+    //     request.open("GET", '/api/questions');
+    //     request.send();
+    // }
 
     function onStartGame() {
         resetCountdown();
@@ -105,8 +104,8 @@ export default function createGame(createQuestionNavigator) {
 
     return {
         start,
-        setRequestHandler: function (handler) {
-            requestHandler = handler;
+        setClient: function (aClient) {
+            client = aClient;
         },
         questionsNavigator: createQuestionNavigator
     }
