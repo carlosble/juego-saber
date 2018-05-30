@@ -1,4 +1,4 @@
-export default function createGame(createQuestionNavigator, createClientApi) {
+export default function createGame(createQuestionNavigator, client) {
 
     var startButton;
     var questionsContainer;
@@ -8,9 +8,7 @@ export default function createGame(createQuestionNavigator, createClientApi) {
     var radioAnswersList;
     var timerId;
     var countdown;
-    let theQuestionNavigator;
-    let client;
-
+    let questionNavigator;
 
     function start() {
         startButton = document.querySelector('.start--button');
@@ -21,10 +19,8 @@ export default function createGame(createQuestionNavigator, createClientApi) {
         radioAnswersList = document.querySelectorAll('.input-radio');
         nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.addEventListener('click', onNextQuestion);
-        client = createClientApi();
         client.getQuestions(function (questions) {
-            theQuestionNavigator = createQuestionNavigator(questions);
-            
+            questionNavigator = createQuestionNavigator(questions);            
         });
     }
 
@@ -38,8 +34,8 @@ export default function createGame(createQuestionNavigator, createClientApi) {
     }
     function loadNextQuestion() {
         resetCountdown();
-        if (theQuestionNavigator.areThereNonVisitedQuestions()) {
-            renderQuestion(theQuestionNavigator.getNextQuestion());
+        if (questionNavigator.areThereNonVisitedQuestions()) {
+            renderQuestion(questionNavigator.getNextQuestion());
         }
         else {
             gameOver();
@@ -94,8 +90,7 @@ export default function createGame(createQuestionNavigator, createClientApi) {
     return {
         start,
         questionsNavigator: createQuestionNavigator,
-        client
-    }
+    };
 }
 
 // // be able to import the file in node

@@ -1,8 +1,9 @@
 const pug = require('pug');
 import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
+import createClientApi from '../src/clientApi';
 
-describe("the questions navigator", () => {
+xdescribe("the questions navigator", () => {
     let questions = [
         {
             id: 10,
@@ -29,35 +30,35 @@ describe("the questions navigator", () => {
     beforeEach(function () {
         questionsNavigator = createQuestionsNavigator(questions);
     });
-   it("gest the current question", () => {
-        
-        let question =     questionsNavigator.getNextQuestion();
-        expect(questions).toContain(question);
-   });
-   it("is always pointing to a question", () => {
-        
-       let question = questionsNavigator.getNextQuestion();
-        expect(questions).toContain(question);
-   });
-   it("is always pointing to a question", () => {
-    
-       questionsNavigator.getNextQuestion();
-       questionsNavigator.getNextQuestion();
-       questionsNavigator.getNextQuestion();
-       questionsNavigator.getNextQuestion();
+    it("gest the current question", () => {
 
-       let question = questionsNavigator.getNextQuestion();
+        let question = questionsNavigator.getNextQuestion();
         expect(questions).toContain(question);
-   });
+    });
+    it("is always pointing to a question", () => {
+
+        let question = questionsNavigator.getNextQuestion();
+        expect(questions).toContain(question);
+    });
+    it("is always pointing to a question", () => {
+
+        questionsNavigator.getNextQuestion();
+        questionsNavigator.getNextQuestion();
+        questionsNavigator.getNextQuestion();
+        questionsNavigator.getNextQuestion();
+
+        let question = questionsNavigator.getNextQuestion();
+        expect(questions).toContain(question);
+    });
     it("get a diferent question", () => {
 
         let initialQuestion = questionsNavigator.getNextQuestion();
         let initialQuestionId = initialQuestion.id;
 
         let firstQuestion = questionsNavigator.getNextQuestion();
-        let firstQuestionId = firstQuestion.id;        
+        let firstQuestionId = firstQuestion.id;
         expect(firstQuestionId).not.toEqual(initialQuestionId);
- 
+
         let nextQuestion = questionsNavigator.getNextQuestion();
         let nextQuestionId = nextQuestion.id;
         expect(nextQuestionId).not.toEqual(firstQuestionId);
@@ -75,31 +76,33 @@ describe("the game", function () {
             id: 10,
             title: 'Foo',
             answers: [
-                {id: 0, answer: '25'},
-                {id: 1, answer: '33'},
-                {id: 2, answer: '37'}
+                { id: 0, answer: '25' },
+                { id: 1, answer: '33' },
+                { id: 2, answer: '37' }
             ],
-            correctAnswer: {id: 2}
+            correctAnswer: { id: 2 }
         },
         {
             id: 11,
             title: 'Pero que dices muchacho?',
             answers: [
-                {id: 0, answer: 'Lusaka'},
-                {id: 1, answer: 'Harare'},
-                {id: 2, answer: 'Canarias'}
+                { id: 0, answer: 'Lusaka' },
+                { id: 1, answer: 'Harare' },
+                { id: 2, answer: 'Canarias' }
             ],
-            correctAnswer: {id: 2}
+            correctAnswer: { id: 2 }
         }
     ];
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
-        game = createGame(createQuestionsNavigator);
-        game.setClient({
-            getQuestions: function (callback){
+        let stubClient;
+
+        stubClient = {
+            getQuestions: function (callback) {
                 callback(questions);
             }
-        });
+        }
+        game = createGame(createQuestionsNavigator, stubClient);
         game.start();
     });
 
