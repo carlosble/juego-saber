@@ -1,7 +1,7 @@
 export default function createQuestionNavigator(questions) {
     let questionsIndex = 0;
     let nonVisitedQuestions = true;
-    function areThereNotVisitedQuestions() {
+    function areThereNonVisitedQuestions() {
         return nonVisitedQuestions;
     }
     function resetQuestions() {
@@ -20,7 +20,7 @@ export default function createQuestionNavigator(questions) {
         return question;
     }
     return {
-        areThereNotVisitedQuestions,
+        areThereNonVisitedQuestions,
         getNextQuestion
     };
 }

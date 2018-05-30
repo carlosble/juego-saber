@@ -1,6 +1,6 @@
 export default function createGame(createQuestionNavigator) {
 
-    var questions = [];
+    // var questions = [];
     var startButton;
     var questionsContainer;
     var nextQuestionButton;

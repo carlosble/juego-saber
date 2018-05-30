@@ -1,5 +1,5 @@
 import createGame from './game.js';
-import createQuestionsNavigator from './questionNavigator';
+import createQuestionsNavigator from './questionsNavigator.js';
 
 window.onload = function () {
     let game = createGame(createQuestionsNavigator);

@@ -70,9 +70,9 @@ describe("the questions navigator", () => {
     });
 });
 
-xdescribe("the game", function () {
-    var game;
-    var questions = [
+describe("the game", function () {
+    let game;
+    let questions = [
         {
             id: 10,
             title: 'Foo',
@@ -104,8 +104,9 @@ xdescribe("the game", function () {
         // game.setRequestHandler(function(callback){
         //     callback(questions);
         // });
-        game.createGame(createQuestionsNavigator(questions));
-        game.start();
+        
+        // game = createGame(createQuestionsNavigator(questions));
+        // game.start();
     });
 
     it('loads the markup', function () {
