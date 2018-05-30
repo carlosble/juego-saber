@@ -1,6 +1,5 @@
 export default function createGame(createQuestionNavigator, createClientApi) {
 
-    // var questions = [];
     var startButton;
     var questionsContainer;
     var nextQuestionButton;
@@ -24,20 +23,8 @@ export default function createGame(createQuestionNavigator, createClientApi) {
         nextQuestionButton.addEventListener('click', onNextQuestion);
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionNavigator(questions);
-            // questions = questions || serverQuestions;
-            // questions = dataJson;
         });
     }
-
-    // function getQuestions(callback) {
-    //     var request = new XMLHttpRequest();
-    //     request.addEventListener("load", function () {
-    //         let questions = JSON.parse(this.responseText);
-    //         callback(questions);
-    //     });
-    //     request.open("GET", '/api/questions');
-    //     request.send();
-    // }
 
     function onStartGame() {
         resetCountdown();

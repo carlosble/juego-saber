@@ -1,6 +1,4 @@
 const pug = require('pug');
-// const application = require('../src/main');
-// import application from '../src/main';
 import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
 
@@ -96,17 +94,13 @@ describe("the game", function () {
     ];
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
-        // let stubClient = {
-        //     getQuestions: function (callback) {
-        //         callback(questions);
-        //     }
-        // };
-        // game.setRequestHandler(function(callback){
-        //     callback(questions);
-        // });
-        
-        // game = createGame(createQuestionsNavigator(questions));
-        // game.start();
+        game = createGame(createQuestionsNavigator);
+        game.setClient({
+            getQuestions: function (callback){
+                callback(questions);
+            }
+        });
+        game.start();
     });
 
     it('loads the markup', function () {
